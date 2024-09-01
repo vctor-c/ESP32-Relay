@@ -1,0 +1,7 @@
+//implementar ethernet
+//O offset do endereço modbuus deixará de ser const para ser um valor configurado pelo usuario no webserver
+// criar arquivo de configuração que ficará ips, configuração hotspot para acesso ao webserver
+// Criar webserver: será acessado ao conectar ao hotspot do esp32. terá configuração de offset de endereços, ips, gateway, subnet, nó na rede e selecionar o protocolo.
+//webserver pt 2: será possivel ver os status de IO em tempo real/ diagnosticos/erros
+// autenticação do web server: https://randomnerdtutorials.com/esp32-esp8266-web-server-http-authentication/
+// https://randomnerdtutorials.com/esp32-access-point-ap-web-server/

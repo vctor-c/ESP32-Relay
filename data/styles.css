@@ -1,0 +1,109 @@
+* {
+	font-family: sans-serif;
+}
+body {
+	margin: 0px;
+	background: #6c7a89;
+}
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.container-item {
+	justify-content: center;
+	align-items: center;
+}
+.velocidade {
+	flex-direction: row;
+}
+
+.botaoVelocidade {
+	background-color: #48abe0;
+	color: white;
+	border: none;
+	padding: 5px;
+	font-size: 31px;
+	height: 90px;
+	width: 90px;
+	box-shadow: 0 2px 4px darkslategray;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+.botaoLiga {
+	background-color: #48abe0;
+	color: white;
+	border: none;
+	margin-top: 20px;
+	padding: 5px;
+	font-size: 31px;
+	height: 90px;
+	width: 90px;
+	box-shadow: 0 2px 4px darkslategray;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+.botaoConfig {
+	background-color: #48abe0;
+	color: white;
+	border: none;
+	padding: 5px;
+	font-size: 31px;
+	height: 90px;
+	width: 285px;
+	box-shadow: 0 2px 4px darkslategray;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+button {
+	margin-bottom: 10px;
+}
+.round {
+	border-radius: 30%;
+}
+.spacing {
+	margin-bottom: 20px;
+}
+.leituraDados {
+	color: white;
+	margin-right: 20px;
+}
+
+#dialog-form {
+	display: none;
+}
+
+.input-container {
+	display: none;
+}
+
+#result-list {
+	margin-top: 20px;
+	padding: 0;
+	list-style: none;
+}
+
+#result-list li {
+	margin-bottom: 5px;
+}
+.bg-nav-custom {
+	background-color: #48abe0;
+}
+
+.nav-link-custom {
+	color: white;
+}
+
+.btn-custom {
+    background-color: #48abe0;
+    color: white;
+    border-color: #48abe0;
+  }
+
+  .btn-custom:hover,
+  .btn-custom:focus,
+  .btn-custom:active {
+    background-color: #65b9e6;
+    border-color: #65b9e6;
+  }
