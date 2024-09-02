@@ -1,5 +1,12 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
+//ativar debug
+#define DEBUG 0
+#if DEBUG == 1
+#define debug(x) Serial.println(x)
+#else
+#define debug(x)
+#endif
 #include <Arduino.h>
 /*Bibliotecas freeRTOS*/
 #include "freertos/FreeRTOS.h"

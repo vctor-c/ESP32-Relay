@@ -6,7 +6,7 @@ void setupModbus() {
     for (int i = OUT1_COIL; i <= OUT8_COIL; i++) {
         mb.addCoil(offSetsTCP[i]);
     }
-    Serial.println("Modbus Server Created...");
+    debug("Modbus Server Created...");
 }
 
 void updateCoils() {

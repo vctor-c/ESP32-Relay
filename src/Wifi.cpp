@@ -19,19 +19,19 @@ void setupWifi()
     WiFi.mode(WIFI_STA);
      // Configures static IP address
   if (!WiFi.config(IP, gateway, subnet)) {
-    Serial.println("STA Failed to configure");
+    debug("STA Failed to configure");
   }
   //configuração com conexao ao wifi
   
   WiFi.begin(ssid, password);
-  Serial.println("Connecting to WiFi...");
+  debug("Connecting to WiFi...");
   while (WiFi.status() != WL_CONNECTED)
   {
      Serial.print('.');
      vTaskDelay(pdTICKS_TO_MS(1000));
   }
-  Serial.println("\nConnected to WiFi...");
-  Serial.println(WiFi.localIP());
+  debug("\nConnected to WiFi...");
+  debug(WiFi.localIP());
   
  //configuração como AP
  //WiFi.softAP(ssid);

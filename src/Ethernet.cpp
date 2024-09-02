@@ -18,19 +18,19 @@ void prt_hwval(uint8_t refval)
     switch (refval)
     {
     case 0:
-        Serial.println("No hardware detected.");
+        debug("No hardware detected.");
         break;
     case 1:
-        Serial.println("WizNet W5100 detected.");
+        debug("WizNet W5100 detected.");
         break;
     case 2:
-        Serial.println("WizNet W5200 detected.");
+        debug("WizNet W5200 detected.");
         break;
     case 3:
-        Serial.println("WizNet W5500 detected.");
+        debug("WizNet W5500 detected.");
         break;
     default:
-        Serial.println("UNKNOWN - Update espnow_gw.ino to match Ethernet.h");
+        debug("UNKNOWN - Update espnow_gw.ino to match Ethernet.h");
     }
 }
 
@@ -39,28 +39,28 @@ void prt_ethval(uint8_t refval)
     switch (refval)
     {
     case 0:
-        Serial.println("Uknown status.");
+        debug("Uknown status.");
         break;
     case 1:
-        Serial.println("Link flagged as UP.");
+        debug("Link flagged as UP.");
         break;
     case 2:
-        Serial.println("Link flagged as DOWN. Check cable connection.");
+        debug("Link flagged as DOWN. Check cable connection.");
         break;
     default:
-        Serial.println("UNKNOWN - Update espnow_gw.ino to match Ethernet.h");
+        debug("UNKNOWN - Update espnow_gw.ino to match Ethernet.h");
     }
 }
 
 void checkConnection()
 {
-    Serial.print("Checking connection.");
+    debug("Checking connection.");
     bool rdy_flag = false;
     for (uint8_t i = 0; i <= 20; i++)
     {
         if ((Ethernet.hardwareStatus() == EthernetNoHardware) || (Ethernet.linkStatus() == LinkOFF))
         {
-            Serial.print(".");
+            debug(".");
             rdy_flag = false;
             delay(80);
         }
@@ -72,10 +72,10 @@ void checkConnection()
     }
     if (rdy_flag == false)
     {
-        Serial.println("\n\r\tHardware fault, or cable problem... cannot continue.");
-        Serial.print("Hardware Status: ");
+        debug("\n\r\tHardware fault, or cable problem... cannot continue.");
+        debug("Hardware Status: ");
         prt_hwval(Ethernet.hardwareStatus());
-        Serial.print("   Cable Status: ");
+        debug("   Cable Status: ");
         prt_ethval(Ethernet.linkStatus());
         while (true)
         {
@@ -84,18 +84,18 @@ void checkConnection()
     }
     else
     {
-        Serial.println(" OK");
+        debug(" OK");
     }
 }
 
 void setupEthernet()
 {
-    Serial.println("Inicializando Ethernet...");
+    debug("Inicializando Ethernet...");
     Ethernet.init(5);
     Ethernet.begin(mac, ethIP, ethdns, ethgateway, ethsubnet);
     delay(1000); // Pequeno atraso para estabilizar a conexão
     checkConnection();
-    Serial.println(getIP());
+    debug(getIP());
 }
 
 bool ethernetConnected()
