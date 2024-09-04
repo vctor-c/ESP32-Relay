@@ -15,6 +15,6 @@ void updateCoils();
 extern ModbusEthernet mb;
 
 // Definição de Offset de coils para saidas dos relês 
-extern int offSetsTCP[];
+extern int stOffSetsTCP[];
 
 #endif

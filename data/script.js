@@ -29,7 +29,22 @@ function onClose(event) {
 	setTimeout(initWebSocket, 2000);
 }
 
+// Function that receives the message from the ESP32 with the readings
+function onMessage(event) {
+	console.log(event.data);
+	var myObj = JSON.parse(event.data);
+	var keys = Object.keys(myObj);
 
+	for (var i = 0; i < keys.length; i++) {
+		var key = keys[i];
+		if (key != "velocidade") {
+			$("#"+key.toString()).html(myObj[key]);
+
+		}else{
+			atualizarKnob(myObj[key]);
+		}
+	}
+}
 
 
 function openPage(pageName,elmnt,color) {

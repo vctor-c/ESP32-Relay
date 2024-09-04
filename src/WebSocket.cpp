@@ -23,12 +23,25 @@ void iniciarWebSocket(AsyncWebServer &server)
     server.addHandler(&ws);
     xTaskCreatePinnedToCore(vTaskenviarLeituras, "TaskEnvioWebSocket", configMINIMAL_STACK_SIZE + 1024, NULL, 1, &taskEnvioWebSocket, PRO_CPU_NUM);
 }
+String macToString(const byte mac[6]) {
+    char macStr[18];
+    snprintf(macStr, sizeof(macStr), "%02X:%02X:%02X:%02X:%02X:%02X", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+    return String(macStr);
+}
+
+String ipToString(const IPAddress &ip) {
+    return ip.toString();
+}
 /*PEGA OS VALORES DE LEITURAS E RETORNA UMA STRING JSON*/
 String leiturasJson()
 {
-    leituras["temperatura"] = String();
-    leituras["humidade"] = String();
-    leituras["velocidade"] = String();
+
+    leituras["MAC"] = macToString(stEthMac);
+    leituras["IP"] = ipToString(stEthIP);
+    leituras["Gateway"] = ipToString(stEthGateway);
+    leituras["Subnet"] = ipToString(stEthSubnet);
+    leituras["DNS"] = ipToString(stEthDns);
+
     String jsonString = JSON.stringify(leituras);
     return jsonString;
 }
@@ -38,19 +51,15 @@ void notificaClientes(String leitura)
     ws.textAll(leitura);
 }
 /*Quando o esp32 recebe um "getLeituras" envia os valores de leitura*/
-void handleWebSocketMessage(void *arg, uint8_t *data, size_t len)
-{
-    /*Leitura Ventilador*/
+void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
     AwsFrameInfo *info = (AwsFrameInfo *)arg;
-    if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT)
-    {
+    if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT) {
         data[len] = 0;
         String message = (char *)data;
-        /*Checa de mensagem eh "getLeituras"*/
-        if (strcmp((char *)data, "getLeituras") == 0)
-        {
+        
+        if (strcmp((char *)data, "getLeituras") == 0) {
             String leitura = leiturasJson();
-            Serial.println(leituras);
+            Serial.println(leitura);  // Print the JSON string to the serial monitor
             notificaClientes(leitura);
         }
     }
