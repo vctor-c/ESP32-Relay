@@ -7,7 +7,7 @@ AsyncWebSocket ws("/ws");
 /*Variaveis para armazenamento do handle das tasks*/
 TaskHandle_t taskEnvioWebSocket = NULL;
 /*prototipos das tasks*/
-void vTaskenviarLeituras(void *pvParameters);
+//void vTaskenviarLeituras(void *pvParameters);
 
 void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len);
 
@@ -21,7 +21,7 @@ void iniciarWebSocket(AsyncWebServer &server)
 {
     ws.onEvent(onEvent);
     server.addHandler(&ws);
-    xTaskCreatePinnedToCore(vTaskenviarLeituras, "TaskEnvioWebSocket", configMINIMAL_STACK_SIZE + 1024, NULL, 1, &taskEnvioWebSocket, PRO_CPU_NUM);
+    //xTaskCreatePinnedToCore(vTaskenviarLeituras, "TaskEnvioWebSocket", configMINIMAL_STACK_SIZE + 1024, NULL, 1, &taskEnvioWebSocket, PRO_CPU_NUM);
 }
 String macToString(const byte mac[6]) {
     char macStr[18];
@@ -84,23 +84,23 @@ void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType 
     }
 }
 
-/*envia Leitura a cada 1 segundo*/
+/*envia Leitura a cada 1 segundo
 void vTaskenviarLeituras(void *pvParameters)
 {
     TickType_t ultimoCiclo;
-    /*frequencia em ticks que sera convertido em ms*/
+    //frequencia em ticks que sera convertido em ms
     const TickType_t frequencia = 5000;
 
-    /*Inicializa ultimoCiclo com o valor atual de ticks*/
+    //Inicializa ultimoCiclo com o valor atual de ticks
     ultimoCiclo = xTaskGetTickCount();
 
     for (;;)
     {
-        /*espera por o proximo ciclo*/
+        //espera por o proximo ciclo
         vTaskDelayUntil(&ultimoCiclo, (frequencia / portTICK_RATE_MS));
-        /*Pega leituras de sensores e envia para clientes*/
+        //Pega leituras de sensores e envia para clientes
         String leiturasSensores = leiturasJson();
         notificaClientes(leiturasSensores);
         ws.cleanupClients();
     }
-}
+}*/
