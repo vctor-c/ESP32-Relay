@@ -1,109 +1,96 @@
-* {
-	font-family: sans-serif;
-}
-body {
-	margin: 0px;
-	background: #6c7a89;
-}
-.container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.container-item {
-	justify-content: center;
-	align-items: center;
-}
-.velocidade {
-	flex-direction: row;
+* {box-sizing: border-box}
+
+/* Set height of body and the document to 100% */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
 }
 
-.botaoVelocidade {
-	background-color: #48abe0;
-	color: white;
-	border: none;
-	padding: 5px;
-	font-size: 31px;
-	height: 90px;
-	width: 90px;
-	box-shadow: 0 2px 4px darkslategray;
-	cursor: pointer;
-	transition: all 0.2s ease;
-}
-.botaoLiga {
-	background-color: #48abe0;
-	color: white;
-	border: none;
-	margin-top: 20px;
-	padding: 5px;
-	font-size: 31px;
-	height: 90px;
-	width: 90px;
-	box-shadow: 0 2px 4px darkslategray;
-	cursor: pointer;
-	transition: all 0.2s ease;
-}
-.botaoConfig {
-	background-color: #48abe0;
-	color: white;
-	border: none;
-	padding: 5px;
-	font-size: 31px;
-	height: 90px;
-	width: 285px;
-	box-shadow: 0 2px 4px darkslategray;
-	cursor: pointer;
-	transition: all 0.2s ease;
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 33.33%;
 }
 
-button {
-	margin-bottom: 10px;
-}
-.round {
-	border-radius: 30%;
-}
-.spacing {
-	margin-bottom: 20px;
-}
-.leituraDados {
-	color: white;
-	margin-right: 20px;
+.tablink:hover {
+  background-color: #777;
 }
 
-#dialog-form {
-	display: none;
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: black;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
 }
 
-.input-container {
-	display: none;
+#Protocolo {background-color: whitesmoke;}
+#Ethernet {background-color: whitesmoke;}
+#Wifi {background-color: whitesmoke;}
+
+/* Style inputs */
+  input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-#result-list {
-	margin-top: 20px;
-	padding: 0;
-	list-style: none;
+/* Style inputs */
+  input[type=password], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-#result-list li {
-	margin-bottom: 5px;
-}
-.bg-nav-custom {
-	background-color: #48abe0;
+/* Style inputs */
+  input[type=number], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-.nav-link-custom {
-	color: white;
+/* Style the submit button */
+input[type=submit] {
+  width: 100%;
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.btn-custom {
-    background-color: #48abe0;
-    color: white;
-    border-color: #48abe0;
-  }
+/* Add a background color to the submit button on mouse-over */
+input[type=submit]:hover {
+  background-color: #45a049;
+}
 
-  .btn-custom:hover,
-  .btn-custom:focus,
-  .btn-custom:active {
-    background-color: #65b9e6;
-    border-color: #65b9e6;
-  }
+
+.needs-validation .invalid-feedback {
+    display: none; /* Inicialmente escondido */
+}
+
+.was-validated .form-control:invalid ~ .invalid-feedback {
+    display: block; /* Exibido quando o campo é inválido após validação */
+}

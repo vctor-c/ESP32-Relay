@@ -1,53 +1,156 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<script src="jquery.min.js"></script>
-		<script src="jquery.knob.min.js"></script>
-		<link rel="stylesheet" href="styles.css" />
-		<script src="script.js"></script>
-		<title>Controle Ventilador</title>
-	</head>
-	<body>
-		<div class="container">
-			<div class="container-item">
-				<button class="botaoLiga">Liga</button>
-			</div>
-		</div>
-		<div class="container">
-			<div class="container-item">
-				<div class="velocidade">
-					<button class="round botaoVelocidade">1</button>
-					<button class="round botaoVelocidade">2</button>
-					<button class="round botaoVelocidade">3</button>
-				</div>
-			</div>
-		</div>
-		<div class="spacing">
-			<div class="container">
-				<div class="container-item">
-					<button class="botaoConfig" id="Man-auto">Manual</button>
-					<div class="container-item">
-						<button class="botaoConfig" id="Prog">Programação</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="container">
-			<input id="knobVelocidade" type="text" value="0" class="dial" />
-		</div>
-		<div class="container">
-			<div class="leituraDados">
-				<span>Temperatura: </span>
-				<span id="temperatura"></span>
-				<span> ºC</span>
-			</div>
-			<div class="leituraDados">
-				<span>Humidade: </span>
-				<span id="humidade"></span>
-				<span> g/m³</span>
-			</div>
-		</div>
-	</body>
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <title>Config</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link href="styles.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <button class="tablink" onclick="openPage('Protocolo', this, 'red')">Protocolo</button>
+        <button class="tablink" onclick="openPage('Ethernet', this, 'green')" id="defaultOpen">Ethernet</button>
+        <button class="tablink" onclick="openPage('Wifi', this, 'blue')">Wifi</button>
+
+        <div id="Protocolo" class="tabcontent">
+            <form action="/action_page.php">
+                <label for="relay1">Relay 1</label>
+                <input type="number" id="Relay1" name="relay1" placeholder="100" required />
+
+                <label for="relay2">Relay 2</label>
+                <input type="number" id="Relay2" name="relay2" placeholder="101" required />
+
+                <label for="relay3">Relay 3</label>
+                <input type="number" id="Relay3" name="relay3" placeholder="102" required />
+
+                <label for="relay4">Relay 4</label>
+                <input type="number" id="Relay4" name="relay4" placeholder="103" required />
+
+                <label for="relay5">Relay 5</label>
+                <input type="number" id="Relay5" name="relay5" placeholder="104" required />
+
+                <label for="relay6">Relay 6</label>
+                <input type="number" id="Relay6" name="relay6" placeholder="105" required />
+
+                <label for="relay7">Relay 7</label>
+                <input type="number" id="Relay7" name="relay7" placeholder="106" required />
+
+                <label for="relay8">Relay 8</label>
+                <input type="number" id="Relay8" name="relay8" placeholder="107" required />
+
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+
+        <div id="Ethernet" class="tabcontent">
+            <form action="/action_page.php">
+                <label for="ethmacAddress" class="form-label">Endereço MAC</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="ethmacAddress"
+                    name="ethmacAddress"
+                    pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$"
+                    placeholder="00:1A:2B:3C:4D:5E"
+                    required />
+
+                <label for="ethipAddress" class="form-label">Endereço IP</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="ethipAddress"
+                    name="ethipAddress"
+                    pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                    placeholder="192.168.0.1"
+                    required />
+
+                <label for="ethgateway" class="form-label">Gateway</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="ethgateway"
+                    name="ethgateway"
+                    pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                    placeholder="192.168.0.1"
+                    required />
+
+                <label for="ethsubnet" class="form-label">Máscara de Sub-rede</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="ethsubnet"
+                    name="ethsubnet"
+                    pattern="^((255|254|252|248|240|224|192|128|0)\.){3}(255|254|252|248|240|224|192|128|0)$"
+                    placeholder="255.255.255.0"
+                    required />
+
+                <label for="ethdns" class="form-label">DNS</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="ethdns"
+                    name="ethdns"
+                    pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                    placeholder="8.8.8.8"
+                    required />
+
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+
+        <div id="Wifi" class="tabcontent">
+            <form action="/action_page.php">
+                <label for="wifiIpAddress" class="form-label">Endereço IP</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="wifiIpAddress"
+                    name="wifiIpAddress"
+                    pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                    placeholder="192.168.0.1"
+                    required />
+
+                <label for="wifiGateway" class="form-label">Gateway</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="wifiGateway"
+                    name="wifiGateway"
+                    pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                    placeholder="192.168.0.1"
+                    required />
+
+                <label for="wifiSubnet" class="form-label">Máscara de Sub-rede</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="wifiSubnet"
+                    name="wifiSubnet"
+                    pattern="^((255|254|252|248|240|224|192|128|0)\.){3}(255|254|252|248|240|224|192|128|0)$"
+                    placeholder="255.255.255.0"
+                    required />
+
+                <div class="container">
+                    <label for="wifiMode">Modo Wi-Fi</label>
+                    <select id="wifiMode" name="wifiMode" onchange="toggleWifiPass()">
+                        <option value="wifiAccessPoint">Ponto de Acesso</option>
+                        <option value="wifiClient">Cliente</option>
+                    </select>
+
+                    <label for="wifiSSID">SSID</label>
+                    <input type="text" id="wifiSSID" name="wifiSSID" placeholder="Gotham" required />
+
+                    <div id="wifiPassOP" style="display: none">
+                        <label for="wifiPass" class="form-label">Senha</label>
+                        <input type="password" class="form-control" value="FakePSW" id="inputWifiPass" />
+                        <input type="checkbox" onclick="showPass()" />Mostrar Senha
+                    </div>
+                </div>
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script src="script.js"></script>
+    </body>
 </html>

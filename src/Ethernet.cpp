@@ -1,16 +1,5 @@
 #include "EthernetSettings.h"
 
-// Endereço MAC (deve ser único na rede)
-byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
-/*IP*/
-IPAddress ethIP(192, 168, 1, 4);
-/*Gateway*/
-IPAddress ethgateway(192, 168, 1, 1);
-/*Subnet*/
-IPAddress ethsubnet(255, 255, 255, 0);
-/*Dns*/
-IPAddress ethdns(8, 8, 8, 8);
-
 EthernetClient client;
 
 void prt_hwval(uint8_t refval)
@@ -88,11 +77,11 @@ void checkConnection()
     }
 }
 
-void setupEthernet()
+void setupEthernet(byte ethMac[6], IPAddress ethIP, IPAddress ethGateway, IPAddress ethSubnet, IPAddress ethDns)
 {
     debug("Inicializando Ethernet...");
     Ethernet.init(5);
-    Ethernet.begin(mac, ethIP, ethdns, ethgateway, ethsubnet);
+    Ethernet.begin(ethMac, ethIP, ethDns, ethGateway, ethSubnet);
     delay(1000); // Pequeno atraso para estabilizar a conexão
     checkConnection();
     debug(getIP());

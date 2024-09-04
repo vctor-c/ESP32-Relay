@@ -29,89 +29,62 @@ function onClose(event) {
 	setTimeout(initWebSocket, 2000);
 }
 
-// Function that receives the message from the ESP32 with the readings
-function onMessage(event) {
-	console.log(event.data);
-	var myObj = JSON.parse(event.data);
-	var keys = Object.keys(myObj);
 
-	for (var i = 0; i < keys.length; i++) {
-		var key = keys[i];
-		if (key != "velocidade") {
-			$("#"+key.toString()).html(myObj[key]);
-			
-		}else{
-			atualizarKnob(myObj[key]);
-		}
-	}
+
+
+function openPage(pageName,elmnt,color) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  document.getElementById(pageName).style.display = "block";
+  elmnt.style.backgroundColor = color;
 }
 
-// Aguarda o carregamento completo do documento
-$(document).ready(function () {
-	// Função para tratar o clique no botão "Liga"
-	$(".botaoLiga").click(function () {
-		websocket.send("Ligar");
-	});
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
 
-	// Função para tratar o clique nos botões de velocidade
-	$(".botaoVelocidade").click(function () {
-		// Implemente aqui a lógica para alterar a velocidade do ventilador
-		var velocidade = $(this).text();
-		if (velocidade == 1) {
-			websocket.send("Velocidade1");
-		} else if (velocidade == 2) {
-			websocket.send("Velocidade2");
-		} else {
-			websocket.send("Velocidade3");
-		}
-	});
+    (function () {
+      'use strict';
 
-	// Função para tratar o clique nos botões de configuração
-	$("#Man-auto").click(function () {
-		var config = $(this).text();
-		if (config == "Manual"){
-			$(this).html("Automatico");
-		}else{
-			$(this).html("Manual");
-		}
-		// Implemente aqui a lógica para tratar a configuração selecionada
-		console.log("Botão manual " + config + " clicado");
-	});
-	$("#Prog").click(function () {
-		var config = $(this).text();
-		window.location.replace("programacao.html");
-		// Implemente aqui a lógica para tratar a configuração selecionada
-		console.log("Botão prog " + config + " clicado");
-	});
-});
+      // Seleciona todos os formulários que desejam a validação do Bootstrap
+      var forms = document.querySelectorAll('.needs-validation');
 
+      // Faz um loop e evita o envio do formulário caso seja inválido
+      Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
 
-$(function () {
-	$(".dial").knob({
-		min: 0,
-		max: 100,
-		angleArc: 280,
-		angleOffset: 220,
-		width: 250,
-		height: 250,
-		release: function (v) {
-			atualizarVelocidade(v);
-		},
-	});
-});
+          form.classList.add('was-validated');
+        }, false);
+      });
+    })();
 
-function atualizarVelocidade(v) {
+    function toggleWifiPass() {
+      var wifiMode = document.getElementById("wifiMode").value;
+      var wifiPassOP = document.getElementById("wifiPassOP");
 
-	websocket.send(map(v, 0, 100, 0, 255));
+      if (wifiMode === "wifiAccessPoint") {
+        wifiPassOP.style.display = "none";
+      } else {
+        wifiPassOP.style.display = "block";
+      }
+    }
+
+function showPass() {
+  var x = document.getElementById("inputWifiPass");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
 }
 
-function atualizarKnob(valor) {
-	$(".dial").val(map(valor, 0, 255, 0, 100)).trigger("change");
-}
-
-function map(value, inputMin, inputMax, outputMin, outputMax) {
-	return (
-		((value - inputMin) * (outputMax - outputMin)) / (inputMax - inputMin) +
-		outputMin
-	);
-}

@@ -1,38 +1,37 @@
 #include "WifiSettings.h"
-/*Credenciais do Wifi*/
-const char *wifiId = "VICTOR 2G";
-const char *wifiPassword = "victorhugo";
-/*Configuracao do wifi*/
-/*IP*/
-IPAddress IP(192, 168, 1, 3);
-/*Gateway*/
-IPAddress gateway(192, 168, 1, 1);
-/*Subnet*/
-IPAddress subnet(255, 255, 255, 0);
 
-void setupWifi()
+/*Configuracao do wifi*/
+void setupWifi(IPAddress wifiIP, IPAddress wifiGateway, IPAddress wifiSubnet, String wifiId, String wifiPassword, boolean apMode)
 {
-    // Configuracao wifi 
-    const char *ssid = wifiId;
-    const char *password = wifiPassword;
-    //inicializar wifi
-    WiFi.mode(WIFI_STA);
-     // Configures static IP address
-  if (!WiFi.config(IP, gateway, subnet)) {
-    debug("STA Failed to configure");
-  }
-  //configuração com conexao ao wifi
-  
-  WiFi.begin(ssid, password);
-  debug("Connecting to WiFi...");
-  while (WiFi.status() != WL_CONNECTED)
-  {
-     Serial.print('.');
-     vTaskDelay(pdTICKS_TO_MS(1000));
-  }
-  debug("\nConnected to WiFi...");
-  debug(WiFi.localIP());
-  
- //configuração como AP
- //WiFi.softAP(ssid);
+   // Configuracao wifi
+   const char *ssid = wifiId.c_str();
+   const char *password = wifiPassword.c_str();
+   // inicializar wifi
+   WiFi.mode(WIFI_STA);
+   // Configures static IP address
+   if (!WiFi.config(wifiIP, wifiGateway, wifiSubnet))
+   {
+      debug("STA Failed to configure");
+   }
+
+   // configuração com conexao ao wifi
+   if (apMode)
+   {
+      // configuração como AP
+      WiFi.softAP(ssid, password);
+      debug("AccessPoint Created...");
+      debug(WiFi.localIP());
+   }
+   else
+   {
+      WiFi.begin(ssid, password);
+      debug("Connecting to WiFi...");
+      while (WiFi.status() != WL_CONNECTED)
+      {
+         Serial.print('.');
+         vTaskDelay(pdTICKS_TO_MS(1000));
+      }
+      debug("\nConnected to WiFi...");
+      debug(WiFi.localIP());
+   }
 }
