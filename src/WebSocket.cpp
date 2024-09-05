@@ -11,7 +11,7 @@ TaskHandle_t taskEnvioWebSocket = NULL;
 
 void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len);
 
-String leiturasJson();
+String leiturasJsonEth();
 
 void notificaClientes(String leiturasSensores);
 
@@ -33,15 +33,46 @@ String ipToString(const IPAddress &ip) {
     return ip.toString();
 }
 /*PEGA OS VALORES DE LEITURAS E RETORNA UMA STRING JSON*/
-String leiturasJson()
+String leiturasJsonEth()
 {
+    leituras = 0;
+    leituras["Leituras"] = "Eth";
+    leituras["EthMAC"] = macToString(stEthMac);
+    leituras["EthIP"] = ipToString(stEthIP);
+    leituras["EthGateway"] = ipToString(stEthGateway);
+    leituras["EthSubnet"] = ipToString(stEthSubnet);
+    leituras["EthDNS"] = ipToString(stEthDns);
 
-    leituras["MAC"] = macToString(stEthMac);
-    leituras["IP"] = ipToString(stEthIP);
-    leituras["Gateway"] = ipToString(stEthGateway);
-    leituras["Subnet"] = ipToString(stEthSubnet);
-    leituras["DNS"] = ipToString(stEthDns);
+    String jsonString = JSON.stringify(leituras);
+    return jsonString;
+}
 
+/*PEGA OS VALORES DE LEITURAS E RETORNA UMA STRING JSON*/
+String leiturasJsonWifi()
+{
+    leituras = 0;
+    leituras["Leituras"] = "Wifi";
+    leituras["WifiIP"] = ipToString(stWifiIP);
+    leituras["WifiGateway"] = ipToString(stWifigateway);
+    leituras["WifiSubnet"] = ipToString(stWifisubnet);
+    leituras["WifiSSID"] = stWifiSSID;
+    leituras["WifiapMode"] = stApMode;
+    String jsonString = JSON.stringify(leituras);
+    return jsonString;
+}
+
+String leiturasJsonProtocol()
+{
+    leituras = 0;
+    leituras["Leituras"] = "Protocol";
+    leituras["Relay1"] = stOffSetsTCP[0];
+    leituras["Relay2"] = stOffSetsTCP[1];
+    leituras["Relay3"] = stOffSetsTCP[2];
+    leituras["Relay4"] = stOffSetsTCP[3];
+    leituras["Relay5"] = stOffSetsTCP[4];
+    leituras["Relay6"] = stOffSetsTCP[5];
+    leituras["Relay7"] = stOffSetsTCP[6];
+    leituras["Relay8"] = stOffSetsTCP[7];
     String jsonString = JSON.stringify(leituras);
     return jsonString;
 }
@@ -57,11 +88,20 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
         data[len] = 0;
         String message = (char *)data;
         
-        if (strcmp((char *)data, "getLeituras") == 0) {
-            String leitura = leiturasJson();
+        if (strcmp((char *)data, "getLeiturasEth") == 0) {
+            String leitura = leiturasJsonEth();
+            Serial.println(leitura);  // Print the JSON string to the serial monitor
+            notificaClientes(leitura);
+        }else if (strcmp((char *)data, "getLeiturasWifi") == 0) {
+            String leitura = leiturasJsonWifi();
+            Serial.println(leitura);  // Print the JSON string to the serial monitor
+            notificaClientes(leitura);
+        }else if (strcmp((char *)data, "getLeiturasProtocol") == 0) {
+            String leitura = leiturasJsonProtocol();
             Serial.println(leitura);  // Print the JSON string to the serial monitor
             notificaClientes(leitura);
         }
+
     }
 }
 /*Lida com eventos do Websocket*/
@@ -99,7 +139,7 @@ void vTaskenviarLeituras(void *pvParameters)
         //espera por o proximo ciclo
         vTaskDelayUntil(&ultimoCiclo, (frequencia / portTICK_RATE_MS));
         //Pega leituras de sensores e envia para clientes
-        String leiturasSensores = leiturasJson();
+        String leiturasSensores = leiturasJsonEth();
         notificaClientes(leiturasSensores);
         ws.cleanupClients();
     }

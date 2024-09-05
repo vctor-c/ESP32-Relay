@@ -8,7 +8,9 @@ function onload(event) {
 }
 
 function getLeituras() {
-  websocket.send("getLeituras");
+  websocket.send("getLeiturasEth");
+  websocket.send("getLeiturasWifi");
+  websocket.send("getLeiturasProtocol");
 }
 
 function iniciarWebSocket() {
@@ -22,6 +24,7 @@ function iniciarWebSocket() {
 function onOpen(event) {
   console.log("Conexao estabelecida");
   getLeituras();
+  toggleWifiPass();
 }
 
 function onClose(event) {
@@ -33,12 +36,35 @@ function onClose(event) {
 function onMessage(event) {
   console.log(event.data);
   var myObj = JSON.parse(event.data);
-  document.getElementById("ethmacAddress").value  = myObj.MAC || "N/A";
-  document.getElementById("ethipAddress").value  = myObj.IP || "N/A";
-  document.getElementById("ethgateway").value  = myObj.Gateway || "N/A";
-  document.getElementById("ethsubnet").value  = myObj.Subnet || "N/A";
-  document.getElementById("ethdns").value  = myObj.DNS || "N/A";
-
+  switch (myObj.Leituras) {
+    case "Eth":
+      document.getElementById("ethmacAddress").value  = myObj.EthMAC || "N/A";
+      document.getElementById("ethipAddress").value  = myObj.EthIP || "N/A";
+      document.getElementById("ethgateway").value  = myObj.EthGateway || "N/A";
+      document.getElementById("ethsubnet").value  = myObj.EthSubnet || "N/A";
+      document.getElementById("ethdns").value  = myObj.EthDNS || "N/A";
+    case "Wifi":
+      document.getElementById("wifiIpAddress").value  = myObj.WifiIP || "N/A";
+      document.getElementById("wifiGateway").value  = myObj.WifiGateway || "N/A";
+      document.getElementById("wifiSubnet").value  = myObj.WifiSubnet || "N/A";
+      document.getElementById("wifiSSID").value  = myObj.WifiSSID || "N/A";
+      if (myObj.WifiapMode){
+        document.getElementById("wifiMode").value  = "wifiAccessPoint";
+      }else{
+        document.getElementById("wifiMode").value  = "wifiClient";
+      }
+      
+    case "Protocol":
+        document.getElementById("Relay1").value  = myObj.Relay1 || "N/A";
+        document.getElementById("Relay2").value  = myObj.Relay2 || "N/A";
+        document.getElementById("Relay3").value  = myObj.Relay3 || "N/A";
+        document.getElementById("Relay4").value  = myObj.Relay4 || "N/A";
+        document.getElementById("Relay5").value  = myObj.Relay5 || "N/A";
+        document.getElementById("Relay6").value  = myObj.Relay6 || "N/A";
+        document.getElementById("Relay7").value  = myObj.Relay7 || "N/A";
+        document.getElementById("Relay8").value  = myObj.Relay8 || "N/A";
+  }
+  
 }
 
 
