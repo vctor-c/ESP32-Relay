@@ -74,34 +74,36 @@
     </div>
 
     <div id="Wifi" class="tabcontent">
-        <form id="formWifi">
-            <label for="wifiIpAddress" class="form-label">Endereço IP</label>
-            <input type="text" class="form-control" id="wifiIpAddress" name="wifiIpAddress"
-                pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
-                placeholder="192.168.0.1" required />
+        <form id="formWifi" >
+            <label for="wifiMode">Modo Wi-Fi</label>
+            <select id="wifiMode" name="wifiMode" onchange="toggleWifiPass()">
+                <option value="wifiAccessPoint">Ponto de Acesso</option>
+                <option value="wifiClient">Cliente</option>
+            </select>
+            <div id="wifiClientMode" style="display: none">
+                <label for="wifiIpAddress" class="form-label">Endereço IP</label>
+                <input type="text" class="form-control" id="wifiIpAddress" name="wifiIpAddress"
+                    pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                    placeholder="192.168.0.1" required />
 
-            <label for="wifiGateway" class="form-label">Gateway</label>
-            <input type="text" class="form-control" id="wifiGateway" name="wifiGateway"
-                pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
-                placeholder="192.168.0.1" required />
+                <label for="wifiGateway" class="form-label">Gateway</label>
+                <input type="text" class="form-control" id="wifiGateway" name="wifiGateway"
+                    pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                    placeholder="192.168.0.1" required />
 
-            <label for="wifiSubnet" class="form-label">Máscara de Sub-rede</label>
-            <input type="text" class="form-control" id="wifiSubnet" name="wifiSubnet"
-                pattern="^((255|254|252|248|240|224|192|128|0)\.){3}(255|254|252|248|240|224|192|128|0)$"
-                placeholder="255.255.255.0" required />
+                <label for="wifiSubnet" class="form-label">Máscara de Sub-rede</label>
+                <input type="text" class="form-control" id="wifiSubnet" name="wifiSubnet"
+                    pattern="^((255|254|252|248|240|224|192|128|0)\.){3}(255|254|252|248|240|224|192|128|0)$"
+                    placeholder="255.255.255.0" required />
 
-            <div class="container">
-                <label for="wifiMode">Modo Wi-Fi</label>
-                <select id="wifiMode" name="wifiMode" onchange="toggleWifiPass()">
-                    <option value="wifiAccessPoint">Ponto de Acesso</option>
-                    <option value="wifiClient">Cliente</option>
-                </select>
-                <div id="wifiPassOP" style="display: none">
-                    <label for="wifiSSID">SSID</label>
-                    <input type="text" id="wifiSSID" name="wifiSSID" placeholder="Gotham" required />
-                    <label for="wifiPass" class="form-label">Senha</label>
-                    <input type="password" class="form-control" placeholder="aLenda" value="" id="inputWifiPass" />
-                    <input type="checkbox" onclick="showPass()" />Mostrar Senha
+                <div class="container">
+                    <div id="wifiPassOP">
+                        <label for="wifiSSID">SSID</label>
+                        <input type="text" id="wifiSSID" name="wifiSSID" placeholder="Gotham" required />
+                        <label for="wifiPass" class="form-label">Senha</label>
+                        <input type="password" class="form-control" placeholder="aLenda" value="" id="inputWifiPass" />
+                        <input type="checkbox" onclick="showPass()" />Mostrar Senha
+                    </div>
                 </div>
             </div>
             <input type="submit" value="Submit" />

@@ -111,9 +111,8 @@ function onMessage(event) {
         document.getElementById("wifiMode").value = "wifiAccessPoint";
       } else {
         document.getElementById("wifiMode").value = "wifiClient";
-        toggleWifiPass();
       }
-
+      toggleWifiPass();
     case "Protocol":
       document.getElementById("Relay1").value = myObj.Relay1 || "N/A";
       document.getElementById("Relay2").value = myObj.Relay2 || "N/A";
@@ -169,15 +168,12 @@ document.getElementById("defaultOpen").click();
 
 function toggleWifiPass() {
   var wifiMode = document.getElementById("wifiMode").value;
-  var wifiPassOP = document.getElementById("wifiPassOP");
-  var wifissid = document.getElementById("wifiSSID");
+  var wifiClienteOP = document.getElementById("wifiClientMode");
 
   if (wifiMode === "wifiAccessPoint") {
-    wifiPassOP.style.display = "none";
-    wifissid.style.display = "none";
+    wifiClienteOP.style.display = "none";
   } else {
-    wifiPassOP.style.display = "block";
-    wifissid.style.display = "block";
+    wifiClienteOP.style.display = "block";
   }
 }
 
