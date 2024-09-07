@@ -8,13 +8,13 @@
 /*Biblioteca Modbus*/
 #include <ModbusEthernet.h>
 
-void setupModbus();
+void setupModbus(int offSetsTCP[], int size);
 void updateCoils();
 
 // Declaração externa de `mb`
 extern ModbusEthernet mb;
 
 // Definição de Offset de coils para saidas dos relês 
-extern int stOffSetsTCP[];
+extern int stOffSetsTCP[8];
 
 #endif

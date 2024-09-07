@@ -1,29 +1,26 @@
 #include "WifiSettings.h"
 
+
 /*Configuracao do wifi*/
 void setupWifi(IPAddress wifiIP, IPAddress wifiGateway, IPAddress wifiSubnet, String wifiId, String wifiPassword, boolean apMode)
 {
-   // Configuracao wifi
+      // Configuracao wifi
    const char *ssid = wifiId.c_str();
    const char *password = wifiPassword.c_str();
-   // inicializar wifi
-   WiFi.mode(WIFI_STA);
-   // Configures static IP address
-   if (!WiFi.config(wifiIP, wifiGateway, wifiSubnet))
-   {
-      debug("STA Failed to configure");
-   }
-
    // configuração com conexao ao wifi
    if (apMode)
    {
-      // configuração como AP
-      WiFi.softAP(ssid, password);
-      debug("AccessPoint Created...");
-      debug(WiFi.localIP());
+   WiFi.mode(WIFI_AP);
+    WiFi.softAP("Esp", "");
+    WiFi.softAPConfig (IPAddress (192,168,4,1), IPAddress (192,168,4,254), IPAddress (255,255,255,0));
+    debug("[+] AP Created with IP Gateway ");
+    debug(WiFi.softAPIP());
+    delay(500);
    }
    else
-   {
+   { 
+      WiFi.mode(WIFI_STA);
+      WiFi.config(wifiIP, wifiGateway, wifiSubnet);
       WiFi.begin(ssid, password);
       debug("Connecting to WiFi...");
       while (WiFi.status() != WL_CONNECTED)
@@ -34,4 +31,5 @@ void setupWifi(IPAddress wifiIP, IPAddress wifiGateway, IPAddress wifiSubnet, St
       debug("\nConnected to WiFi...");
       debug(WiFi.localIP());
    }
+
 }

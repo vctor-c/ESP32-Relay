@@ -5,3 +5,4 @@
 //webserver pt 2: será possivel ver os status de IO em tempo real/ diagnosticos/erros
 // autenticação do web server: https://randomnerdtutorials.com/esp32-esp8266-web-server-http-authentication/
 // https://randomnerdtutorials.com/esp32-access-point-ap-web-server/
+// implementar reconnet no wifi caso seja desconectado

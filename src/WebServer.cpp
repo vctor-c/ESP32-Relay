@@ -7,6 +7,6 @@ void IniciarWebserver(AsyncWebServer &server)
   // URL RAIZ DO WEBSERVER
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
             { request->send(SPIFFS, "/index.html", "text/html"); });
-  server.serveStatic("/", SPIFFS, "/");
+  server.serveStatic("/", SPIFFS, "/").setDefaultFile("/index.html");
   server.begin();
 }

@@ -9,4 +9,5 @@ void setupInit();
 void configOffset(int OffSetsTCP[8]);
 void configEth(byte ethMac[6], IPAddress ethIp, IPAddress ethGateway, IPAddress ethSubnet, IPAddress ethDns);
 void configWifi(IPAddress wifiIp, IPAddress wifiGateway, IPAddress wifiSubnet, String wifiSSID, String wifiPassword, boolean wifiApMode);
+void resetConfig();
 #endif

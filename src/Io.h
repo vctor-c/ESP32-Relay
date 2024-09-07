@@ -16,6 +16,9 @@ const int outPins[] = {
     12, //Relay7
     13  //Relay8
 };
+const int inPins[] = {
+    36, //reset config
+};
 
 #endif
 

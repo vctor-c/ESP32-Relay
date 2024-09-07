@@ -2,7 +2,6 @@
 #include "wifiSettings.h"
 #include "settings.h"
 #include "SPIFFSSettings.h"
-#include <Arduino_JSON.h>
 #include "WebServerSettings.h"
 #include "WebsocketSettings.h"
 #include "Io.h"
@@ -18,7 +17,7 @@ void setup()
   setupInit();
   setupWifi(stWifiIP, stWifigateway, stWifisubnet, stWifiSSID, stWifiPassword, stApMode);
   setupEthernet(stEthMac, stEthIP, stEthGateway, stEthSubnet, stEthDns);
-  setupModbus();
+  setupModbus(stOffSetsTCP, 8);
   setupPins();
   iniciarSPIFFS();
   IniciarWebserver(server);
@@ -30,4 +29,8 @@ void loop()
   mb.task();
   updateCoils();
   delay(10);
+  if (digitalRead(inPins[0]) == HIGH) {
+    resetConfig();  // Executa a função quando o pino estiver em verdadeiro
+    debug("Reset config");
+  }
 }

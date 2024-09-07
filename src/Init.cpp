@@ -11,10 +11,11 @@ IPAddress stEthIP;
 IPAddress stEthGateway;
 IPAddress stEthSubnet;
 IPAddress stEthDns;
-int stOffSetsTCP[8];
+int stOffSetsTCP[8] = {0,1,2,3,4,5,6,7}; // Inicialize com valores padrão ou específicos
 void setupInit()
 {
     preferences.begin("config", false);
+    //preferences.clear();
     // Load Wi-Fi configuration
     stWifiIP = preferences.getUInt("stWifiIP", IPAddress(192, 168, 1, 3));
     stWifigateway = preferences.getUInt("stWifigateway", IPAddress(192, 168, 1, 1));
@@ -44,10 +45,9 @@ void setupInit()
     stEthGateway = IPAddress(preferences.getUInt("stEthgateway", IPAddress(192, 168, 1, 1)));
     stEthSubnet = IPAddress(preferences.getUInt("stEthsubnet", IPAddress(255, 255, 255, 0)));
     stEthDns = IPAddress(preferences.getUInt("stEthDns", IPAddress(8, 8, 8, 8)));
-
-    if (preferences.getBytesLength("stOffSetsTCP") == sizeof(stOffSetsTCP))
+    if (preferences.getBytesLength("stOffSetsTCP") == 32)
     {
-        preferences.getBytes("stOffSetsTCP", stOffSetsTCP, sizeof(stOffSetsTCP));
+        preferences.getBytes("stOffSetsTCP", stOffSetsTCP, 32);
     }
     else
     {
@@ -84,11 +84,17 @@ void configEth(byte ethMac[6], IPAddress ethIp, IPAddress ethGateway, IPAddress 
     preferences.putUInt("stEthsubnet", ethSubnet);
     preferences.putUInt("stEthDns", ethDns);
     preferences.end();
+    debug("Dados gravados");
 }
 
 void configOffset(int OffSetsTCP[8])
 {
     preferences.begin("config", false);
-    preferences.putBytes("stOffSetsTCP", OffSetsTCP, sizeof(OffSetsTCP));
+    preferences.putBytes("stOffSetsTCP", OffSetsTCP, 32);
+    debug(OffSetsTCP[4]);
     preferences.end();
+}
+
+void resetConfig(){
+    preferences.clear();
 }
