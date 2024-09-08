@@ -102,42 +102,51 @@ void notificaClientes(const String &leitura)
     ws.textAll(leitura);
 }
 
-IPAddress stringToIp(const String &ipStr) {
+IPAddress stringToIp(const String &ipStr)
+{
     IPAddress ip;
-    if (ip.fromString(ipStr)) {
-        return ip;  // Retorna o IP se a conversão for bem-sucedida
-    } else {
+    if (ip.fromString(ipStr))
+    {
+        return ip; // Retorna o IP se a conversão for bem-sucedida
+    }
+    else
+    {
         // Se a conversão falhar, você pode definir um IP padrão ou lidar com o erro
-        debug ("falhou");
-        return IPAddress(1, 0, 0, 0);  // IP padrão indicando erro
+        debug("falhou");
+        return IPAddress(1, 0, 0, 0); // IP padrão indicando erro
     }
 }
 
 // Função para converter string MAC em um array de bytes
-byte* stringToMac(const String& macStr) {
-    static byte mac[6];  // Array estático para armazenar o MAC
+byte *stringToMac(const String &macStr)
+{
+    static byte mac[6]; // Array estático para armazenar o MAC
     // Verifica se a string tem o comprimento correto
-    if (macStr.length() != 17) {
-        return nullptr;  // Retorna nullptr se a string estiver no formato errado
+    if (macStr.length() != 17)
+    {
+        return nullptr; // Retorna nullptr se a string estiver no formato errado
     }
 
     int byteValues[6];
     int pos = 0;
 
     // Converte cada byte da string para um valor numérico
-    for (int i = 0; i < 6; i++) {
-        if (sscanf(macStr.c_str() + pos, "%2X", &byteValues[i]) != 1) {
-            return nullptr;  // Retorna nullptr se a conversão falhar
+    for (int i = 0; i < 6; i++)
+    {
+        if (sscanf(macStr.c_str() + pos, "%2X", &byteValues[i]) != 1)
+        {
+            return nullptr; // Retorna nullptr se a conversão falhar
         }
-        pos += 3;  // Avança 2 caracteres e 1 separador
+        pos += 3; // Avança 2 caracteres e 1 separador
     }
 
     // Copia os valores para o array de bytes
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 6; i++)
+    {
         mac[i] = byteValues[i];
     }
 
-    return mac;  // Retorna o array de bytes
+    return mac; // Retorna o array de bytes
 }
 
 /*Processa o JSON recebido e atualiza as variáveis correspondentes*/
@@ -159,13 +168,15 @@ void processarJsonRecebido(const String &jsonString)
         String ethMac = doc["ethMac"].as<String>();
         String ethSubnet = doc["ethSubnet"].as<String>();
         // Atualize suas variáveis com os novos valores recebidos
-        byte* macResult = stringToMac(ethMac);
+        byte *macResult = stringToMac(ethMac);
         IPAddress ipResult = stringToIp(ethIP);
         IPAddress gatewayResult = stringToIp(ethGateway);
         IPAddress subnetResult = stringToIp(ethSubnet);
         IPAddress dnsResult = stringToIp(ethDns);
         configEth(macResult, ipResult, gatewayResult, subnetResult, dnsResult);
-    }else if (doc["wifiIP"]) {
+    }
+    else if (doc["wifiIP"])
+    {
         String wifiIP = doc["wifiIP"].as<String>();
         String wifiGateway = doc["wifiGateway"].as<String>();
         String wifiSubnet = doc["wifiSubnet"].as<String>();
@@ -179,7 +190,9 @@ void processarJsonRecebido(const String &jsonString)
         IPAddress stWifisubnetResult = stringToIp(wifiSubnet);
 
         configWifi(WifiIPResult, stWifigatewayResult, stWifisubnetResult, wifiSSID, inputWifiPass, wifiApMode);
-    }else if (doc["relay1"]) {
+    }
+    else if (doc["relay1"])
+    {
         int OffSetsTCP[8];
         OffSetsTCP[0] = doc["relay1"].as<int>();
         OffSetsTCP[1] = doc["relay2"].as<int>();
